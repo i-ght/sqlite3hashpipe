@@ -1,4 +1,4 @@
-CFLAGS="-I./include -I./src -I$HOME/.local/include"
+CFLAGS="-I./include -I./src"
 LFLAGS=""
 
 for dotc_file in ./src/*.c; do
@@ -12,6 +12,7 @@ for doto_file in ./src/*.c.o; do
 done
 
 ar rcs bin/libhashpipe.a $doto_files
+
 clang -g -DDEBUG=1 -shared -o bin/libhashpipe.so $doto_files $LFLAGS $CFLAGS
  
 clang -g -DDEBUG=1 -o bin/program program/program.c -I./include -L./bin -l:libhashpipe.a
@@ -25,12 +26,12 @@ case "$1" in
   "$install")
     cp bin/libhashpipe.so ~/.local/lib/
     cp bin/libhashpipe.a ~/.local/lib/
-    cp include/hash.h ~/.local/include
+    cp include/hashpipe.h ~/.local/include
   ;;
   "$uninstall")
     rm ~/.local/lib/libhashpipe.so
     rm ~/.local/lib/libhashpipe.a
-    rm ~/.local/include/hash.h
+    rm ~/.local/include/hashpipe.h
   ;;
   *)
     
